@@ -1,5 +1,5 @@
 {
-    "name": "cucumber_core",
+    "name": "drupal/cucumber_core",
     "type": "drupal-module",
     "description": "Cucumber Core module",
     "keywords": [
@@ -9,5 +9,8 @@
     "support": {
         "issues": "https://www.drupal.org/project/issues/cucumber_core",
         "source": "http://cgit.drupalcode.org/cucumber_core"
+    },
+    "require": {
+      "drupal/core": "^9 || ^10"
     }
 }
