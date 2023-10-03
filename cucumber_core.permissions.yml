@@ -1,0 +1,7 @@
+access projects page:
+  title: 'Access Projects page'
+  description: 'Let user roles with access projects see the projects page'
+
+access features page:
+  title: 'Access Features page'
+  description: 'Let user roles with access features see the features page'
