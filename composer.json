@@ -1,0 +1,13 @@
+{
+    "name": "cucumber_core",
+    "type": "drupal-module",
+    "description": "Cucumber Core module",
+    "keywords": [
+    ],
+    "homepage": "https://www.drupal.org/project/cucumber_core",
+    "minimum-stability": "dev",
+    "support": {
+        "issues": "https://www.drupal.org/project/issues/cucumber_core",
+        "source": "http://cgit.drupalcode.org/cucumber_core"
+    }
+}
