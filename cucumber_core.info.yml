@@ -1,5 +1,5 @@
 name: 'Cucumber Core'
 type: module
 description: 'Cucumber Core is a module for storing additional small edit codes that support the Cucumber Core profile.'
-core_version_requirement: ^9 || ^10
+core_version_requirement: ~10.1.0
 package: 'Webship'

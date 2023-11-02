@@ -11,6 +11,6 @@
         "source": "http://cgit.drupalcode.org/cucumber_core"
     },
     "require": {
-      "drupal/core": "^9 || ^10"
+      "drupal/core": "~10.1.0"
     }
 }
