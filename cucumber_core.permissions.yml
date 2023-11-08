@@ -1,15 +1,3 @@
-access projects page:
-  title: 'Access Projects Page'
-  description: 'Let user roles with access projects see the projects page'
-
-access products page:
-  title: 'Access Products Page'
-  description: 'Let user roles with access products see the products page'
-
-access components page:
-  title: 'Access Components Page'
-  description: 'Let user roles with access components see the components page'
-
 access features page:
   title: 'Access Features page'
   description: 'Let user roles with access features see the features page'
