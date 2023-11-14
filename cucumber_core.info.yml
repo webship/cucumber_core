@@ -3,3 +3,15 @@ type: module
 description: 'Cucumber Core is a module for storing additional small edit codes that support the Cucumber Core profile.'
 core_version_requirement: ~10.1.0
 package: 'Webship'
+
+dependencies:
+- autocomplete_deluxe:autocomplete_deluxe
+- field_layout:field_layout
+- ace_editor:ace_editor
+- dashboards:dashboards
+- media:media
+- media_directories:media_directories
+- media_library:media_library
+- token_filter:token_filter
+- views_accordion:views_accordion
+- content_moderation:content_moderation
