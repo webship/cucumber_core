@@ -11,6 +11,9 @@
         "source": "http://cgit.drupalcode.org/cucumber_core"
     },
     "require": {
-      "drupal/core": "~10.1.0"
+      "drupal/core": "~10.1.0",
+      "drupal/webconfig": "10.0.x-dev",
+      "drupal/webdev": "10.0.x-dev",
+      "drupal/webadmin": "10.0.x-dev"
     }
 }
