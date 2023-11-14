@@ -5,4 +5,13 @@ core_version_requirement: ~10.1.0
 package: 'Webship'
 
 install:
+- autocomplete_deluxe
+- field_layout
+- ace_editor
+- dashboards
+- media
+- media_directories
+- media_library
+- token_filter
+- views_accordion
 - content_moderation
