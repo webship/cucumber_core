@@ -14,4 +14,3 @@ dependencies:
 - media_library:media_library
 - token_filter:token_filter
 - views_accordion:views_accordion
-- content_moderation:content_moderation
