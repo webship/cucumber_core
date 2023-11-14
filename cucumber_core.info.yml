@@ -15,3 +15,4 @@ install:
 - token_filter
 - views_accordion
 - content_moderation
+- gherkin
