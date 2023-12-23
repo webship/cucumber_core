@@ -1,18 +1,48 @@
-name: 'Cucumber Core'
+name: Cucumber Core
 type: module
-description: 'Cucumber Core is a module for storing additional small edit codes that support the Cucumber Core profile.'
-core_version_requirement: ~10.1.0
-package: 'Webship'
+description: Provides core configurations for the Cucumber Automated Functional Acceptance Testing Management system.
+core_version_requirement: ~10.2.0
+package: Cucumber
+dependencies:
+  - drupal:config
+  - drupal:tracker
+  - drupal:comment
+  - drupal:taxonomy
+  - drupal:menu_link_content
+  - drupal:menu_ui
+  - drupal:dynamic_page_cache
+  - drupal:page_cache
+  - drupal:automated_cron
+  - drupal:field
+  - drupal:field_ui
+  - drupal:text
+  - drupal:options
+  - drupal:contextual
+  - drupal:editor
+  - drupal:filter
+  - drupal:path
+  - drupal:search
+  - drupal:shortcut
+  - drupal:datetime_range
+  - drupal:layout_discovery
+  - drupal:field_layout
+  - drupal:statistics
+  - drupal:syslog
+  - drupal:update
+  - drupal:history
+  - drupal:media
+  - drupal:media_library
+  - drupal:views_ui
+  - webconfig:webconfig
+  - webdev:webdev
+  - webadmin:webadmin
+  - gherkin:gherkin
+  - media_directories:media_directories
+  - media_directories:media_directories_editor
+  - media_directories:media_directories_ui
+  - token_filter:token_filter
+  - views_accordion:views_accordion
+  - autocomplete_deluxe:autocomplete_deluxe
+  - gin_login:gin_login
+  - user_redirect:user_redirect
 
-install:
-- autocomplete_deluxe
-- field_layout
-- ace_editor
-- dashboards
-- media
-- media_directories
-- media_library
-- token_filter
-- views_accordion
-- content_moderation
-- gherkin

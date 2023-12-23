@@ -1,24 +1,35 @@
 {
-    "name": "drupal/cucumber_core",
-    "type": "drupal-module",
-    "description": "Cucumber Core module",
-    "keywords": [
-    ],
-    "homepage": "https://www.drupal.org/project/cucumber_core",
-    "minimum-stability": "dev",
-    "support": {
-        "issues": "https://www.drupal.org/project/issues/cucumber_core",
-        "source": "http://cgit.drupalcode.org/cucumber_core"
-    },
-    "require": {
-      "drupal/core": "~10.1.0",
-      "drupal/webconfig": "10.0.x-dev",
-      "drupal/webdev": "10.0.x-dev",
-      "drupal/webadmin": "10.0.x-dev",
-      "drupal/webpatches": "10.0.x-dev",
-      "drupal/ace_editor": "~2.0.0",
-      "drupal/media_directories": "2.1.0-beta2",
-      "drupal/gherkin": "1.0.x-dev",
-      "drupal/views_accordion": "~2.0.1"
+  "name": "drupal/cucumber_core",
+  "description": "Provides core configurations for the Cucumber Automated Functional Acceptance Testing Management system.",
+  "type": "drupal-module",
+  "homepage": "https://www.drupal.org/project/cucumber_core",
+  "license": "GPL-2.0-or-later",
+  "minimum-stability": "dev",
+  "authors": [
+    {
+      "name": "Webship.co",
+      "homepage": "http://webship.co",
+      "role": "Maintainer"
     }
+  ],
+  "support": {
+    "issues": "https://www.drupal.org/project/issues/cucumber_core",
+    "source": "http://cgit.drupalcode.org/cucumber_core"
+  },
+  "repositories": {
+    "drupal": {
+      "type": "composer",
+      "url": "https://packages.drupal.org/8"
+    }
+  },
+  "require": {
+    "drupal/core": "~10.2.0",
+    "drupal/webpatches": "~10.0",
+    "drupal/webconfig": "~10.0",
+    "drupal/webdev": "~10.0",
+    "drupal/webadmin": "~10.0",
+    "drupal/webassets": "~10.0",
+    "drupal/gherkin": "~1.0",
+    "drupal/views_accordion": "~2.0.0"
+  }
 }
