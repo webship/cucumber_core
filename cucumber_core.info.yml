@@ -5,7 +5,6 @@ core_version_requirement: ~10.2.0
 package: Cucumber
 dependencies:
   - drupal:config
-  - drupal:tracker
   - drupal:comment
   - drupal:taxonomy
   - drupal:menu_link_content
