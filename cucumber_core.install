@@ -1,0 +1,19 @@
+<?php
+
+/**
+ * @file
+ * Install, update and uninstall functions for the Cucumber core module.
+ */
+
+use Drupal\Core\Recipe\Recipe;
+use Drupal\Core\Recipe\RecipeRunner;
+
+/**
+ * Implements hook_install().
+ */
+function cucumber_core_install() {
+
+  $media_directories_settings_recipe = Recipe::createFromDirectory( __DIR__ . '/recipes/media-directories-settings');
+  RecipeRunner::processRecipe($media_directories_settings_recipe);
+
+}

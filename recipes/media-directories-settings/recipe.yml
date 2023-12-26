@@ -1,0 +1,9 @@
+name: Media Directories settings
+description: A recipe to manage default Media Directories settings
+type: Testing
+config:
+  actions:
+    media_directories.settings:
+      simple_config_update:
+        directory_taxonomy: feature_directory
+        all_files_in_root: true

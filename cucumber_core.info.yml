@@ -44,4 +44,3 @@ dependencies:
   - autocomplete_deluxe:autocomplete_deluxe
   - gin_login:gin_login
   - user_redirect:user_redirect
-
