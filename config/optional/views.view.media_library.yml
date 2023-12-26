@@ -4,7 +4,6 @@ dependencies:
   config:
     - core.entity_view_mode.media.media_library
     - image.style.media_library
-    - taxonomy.vocabulary.feature_directory
   module:
     - image
     - media
@@ -336,8 +335,7 @@ display:
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
-              admin: '0'
-              super_admin: '0'
+              administrator: '0'
           is_grouped: false
           group_info:
             label: ''
@@ -379,8 +377,7 @@ display:
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
-              admin: '0'
-              super_admin: '0'
+              administrator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -465,8 +462,7 @@ display:
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
-              admin: '0'
-              super_admin: '0'
+              administrator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -508,7 +504,7 @@ display:
       footer: {  }
       display_extenders: {  }
     cache_metadata:
-      max-age: 0
+      max-age: -1
       contexts:
         - 'languages:language_interface'
         - url
@@ -516,9 +512,7 @@ display:
         - 'url.query_args:sort_by'
         - user
         - user.permissions
-      tags:
-        - 'config:core.entity_view_display.media.feature.default'
-        - 'config:core.entity_view_display.media.feature.media_library'
+      tags: {  }
   page:
     id: page
     display_title: Page
@@ -806,7 +800,7 @@ display:
       display_extenders: {  }
       path: admin/content/media-grid
     cache_metadata:
-      max-age: 0
+      max-age: -1
       contexts:
         - 'languages:language_content'
         - 'languages:language_interface'
@@ -815,9 +809,7 @@ display:
         - 'url.query_args:sort_by'
         - user
         - user.permissions
-      tags:
-        - 'config:core.entity_view_display.media.feature.default'
-        - 'config:core.entity_view_display.media.feature.media_library'
+      tags: {  }
   widget:
     id: widget
     display_title: Widget
@@ -951,7 +943,6 @@ display:
           default_argument_type: fixed
           default_argument_options:
             argument: ''
-          default_argument_skip_url: false
           summary_options:
             base_path: ''
             count: true
@@ -1072,8 +1063,7 @@ display:
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
-              admin: '0'
-              super_admin: '0'
+              administrator: '0'
           is_grouped: false
           group_info:
             label: ''
@@ -1169,9 +1159,7 @@ display:
         - 'url.query_args:sort_by'
         - user
         - user.permissions
-      tags:
-        - 'config:core.entity_view_display.media.feature.default'
-        - 'config:core.entity_view_display.media.feature.media_library'
+      tags: {  }
   widget_table:
     id: widget_table
     display_title: 'Widget (table)'
@@ -1276,7 +1264,6 @@ display:
           default_argument_type: fixed
           default_argument_options:
             argument: ''
-          default_argument_skip_url: false
           summary_options:
             base_path: ''
             count: true
@@ -1397,8 +1384,7 @@ display:
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
-              admin: '0'
-              super_admin: '0'
+              administrator: '0'
           is_grouped: false
           group_info:
             label: ''

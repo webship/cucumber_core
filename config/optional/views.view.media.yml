@@ -3,11 +3,9 @@ status: true
 dependencies:
   config:
     - image.style.thumbnail
-    - taxonomy.vocabulary.feature_directory
   module:
     - image
     - media
-    - media_directories
     - user
 id: media
 label: Media
@@ -586,52 +584,6 @@ display:
           granularity: second
       arguments: {  }
       filters:
-        directory:
-          id: directory
-          table: media_field_data
-          field: directory
-          relationship: none
-          group_type: group
-          admin_label: ''
-          entity_type: media
-          entity_field: directory
-          plugin_id: media_directory
-          operator: or
-          value: {  }
-          group: 1
-          exposed: true
-          expose:
-            operator_id: directory_op
-            label: Directory
-            description: ''
-            use_operator: false
-            operator: directory_op
-            operator_limit_selection: false
-            operator_list: {  }
-            identifier: directory
-            required: false
-            remember: false
-            multiple: false
-            remember_roles:
-              authenticated: authenticated
-              anonymous: '0'
-              admin: '0'
-              super_admin: '0'
-            reduce: false
-          is_grouped: false
-          group_info:
-            label: ''
-            description: ''
-            identifier: ''
-            optional: true
-            widget: select
-            multiple: false
-            remember: false
-            default_group: All
-            default_group_multiple: {  }
-            group_items: {  }
-          reduce_duplicates: false
-          error_message: true
         name:
           id: name
           table: media_field_data
@@ -661,8 +613,7 @@ display:
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
-              admin: '0'
-              super_admin: '0'
+              administrator: '0'
           is_grouped: false
           group_info:
             label: ''
@@ -704,8 +655,7 @@ display:
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
-              admin: '0'
-              super_admin: '0'
+              administrator: '0'
             reduce: false
           is_grouped: false
           group_info:
@@ -835,8 +785,7 @@ display:
             remember_roles:
               authenticated: authenticated
               anonymous: '0'
-              admin: '0'
-              super_admin: '0'
+              administrator: '0'
             reduce: false
           is_grouped: false
           group_info:
