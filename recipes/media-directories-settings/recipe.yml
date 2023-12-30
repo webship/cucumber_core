@@ -1,5 +1,5 @@
 name: Media Directories settings
-description: A recipe to manage default Media Directories settings
+description: A recipe to manage default Media Directories settings.
 type: Testing
 config:
   actions:

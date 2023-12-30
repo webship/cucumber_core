@@ -13,7 +13,12 @@ use Drupal\Core\Recipe\RecipeRunner;
  */
 function cucumber_core_install() {
 
+  // A recipe to manage default Media Directories settings.
   $media_directories_settings_recipe = Recipe::createFromDirectory( __DIR__ . '/recipes/media-directories-settings');
   RecipeRunner::processRecipe($media_directories_settings_recipe);
+
+  // A recipe to manage the default and admin dashboards.
+  $dashboards_recipe = Recipe::createFromDirectory( __DIR__ . '/recipes/cucumber-dashboards');
+  RecipeRunner::processRecipe($dashboards_recipe);
 
 }
