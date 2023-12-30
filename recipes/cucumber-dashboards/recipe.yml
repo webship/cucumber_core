@@ -3,17 +3,13 @@ description: A recipe to manage the default and admin dashboards.
 type: Testing
 config:
   actions:
-    media_directories.settings:
-      simple_config_update:
-        directory_taxonomy: feature_directory
-        all_files_in_root: true
+    user.role.admin:
+      grantPermissions:
+        - 'can view default_dashboard dashboard'
+        - 'can view admin_dashboard dashboard'
     user_redirect.settings:
       simple_config_update:
         login.admin.redirect_url: '/dashboard/admin_dashboard'
         logout.admin.redirect_url: '/user/login'
         login.super_admin.redirect_url: '/dashboard/admin_dashboard'
         logout.super_admin.redirect_url: '/user/login'
-    user.role.admin:
-      grantPermissions:
-        - 'can view admin_dashboard dashboard'
-        - 'can view admin_dashboard dashboard'
