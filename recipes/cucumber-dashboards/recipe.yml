@@ -16,3 +16,4 @@ config:
     user.role.admin:
       grantPermissions:
         - 'can view admin_dashboard dashboard'
+        - 'can view admin_dashboard dashboard'
