@@ -25,13 +25,13 @@ dependencies:
   - drupal:datetime_range
   - drupal:layout_discovery
   - drupal:field_layout
-  - drupal:statistics
   - drupal:syslog
   - drupal:update
   - drupal:history
   - drupal:media
   - drupal:media_library
   - drupal:views_ui
+  - dashboards:dashboards
   - webconfig:webconfig
   - webdev:webdev
   - webadmin:webadmin
