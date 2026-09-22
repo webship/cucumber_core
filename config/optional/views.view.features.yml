@@ -484,11 +484,13 @@ display:
       arguments:
         nid:
           id: nid
-          table: tracker_node
+          table: node_field_data
           field: nid
-          relationship: nid
+          relationship: reverse__node__field_features
           group_type: group
           admin_label: ''
+          entity_type: node
+          entity_field: nid
           plugin_id: node_nid
           default_action: default
           exception:
@@ -705,17 +707,6 @@ display:
           admin_label: field_features
           entity_type: media
           plugin_id: entity_reverse
-          required: true
-        nid:
-          id: nid
-          table: node_field_revision
-          field: nid
-          relationship: reverse__node__field_features
-          group_type: group
-          admin_label: nid
-          entity_type: node
-          entity_field: nid
-          plugin_id: standard
           required: true
       use_ajax: true
       header: {  }
