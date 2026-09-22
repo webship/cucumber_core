@@ -9,13 +9,13 @@ dependencies:
   module:
     - ace_editor
     - content_moderation
+    - cucumber_core
     - image
     - media
     - media_directories
     - media_library
     - node
     - user
-    - views_accordion
 id: features
 label: Features
 module: views
@@ -672,21 +672,12 @@ display:
         groups:
           1: AND
       style:
-        type: views_accordion
+        type: cucumber_core_disclosure
         options:
           grouping: {  }
           row_class: gherkin-script
           default_row_class: true
-          disableifone: 0
-          row-start-open: '0'
-          collapsible: 1
-          animated: swing
-          animation_time: '300'
-          heightStyle: content
-          event: click
-          use_header_icons: 1
-          icon_header: ui-icon-triangle-1-e
-          icon_active_header: ui-icon-triangle-1-s
+          open_first: true
       row:
         type: fields
       query:

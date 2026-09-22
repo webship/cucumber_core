@@ -1,0 +1,5 @@
+disclosure:
+  version: VERSION
+  css:
+    component:
+      css/cucumber-core.disclosure.css: {}

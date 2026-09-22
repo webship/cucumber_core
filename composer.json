@@ -32,7 +32,6 @@
     "drupal/dashboards": "~2.1.0",
     "drupal/gin": "~5.0",
     "drupal/gin_login": "~2.1.0",
-    "drupal/gherkin": "~1.0",
-    "drupal/views_accordion": "~2.0.0"
+    "drupal/gherkin": "~1.0"
   }
 }

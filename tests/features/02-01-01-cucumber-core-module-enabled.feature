@@ -16,5 +16,9 @@ Feature: Cucumber Core module and its dependencies are enabled
     Then the element "#edit-modules-gherkin-enable" with the attribute "checked" and the value "checked" should exist
      And the element "#edit-modules-dashboards-enable" with the attribute "checked" and the value "checked" should exist
      And the element "#edit-modules-media-directories-enable" with the attribute "checked" and the value "checked" should exist
-     And the element "#edit-modules-views-accordion-enable" with the attribute "checked" and the value "checked" should exist
      And the element "#edit-modules-user-redirect-enable" with the attribute "checked" and the value "checked" should exist
+
+  Scenario: The jQuery UI accordion modules are not needed
+    When I navigate to "/admin/modules"
+    Then the element "#edit-modules-views-accordion-enable" with the attribute "checked" and the value "checked" should not exist
+     And the element "#edit-modules-jquery-ui-accordion-enable" with the attribute "checked" and the value "checked" should not exist

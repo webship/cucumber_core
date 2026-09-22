@@ -1,0 +1,7 @@
+views.style.cucumber_core_disclosure:
+  type: views_style
+  label: "Disclosure list"
+  mapping:
+    open_first:
+      type: boolean
+      label: "Open the first row"

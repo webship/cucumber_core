@@ -44,7 +44,6 @@ Drupal core `^11.4 || ^12`, plus the contributed modules listed in
 - [Webadmin](https://www.drupal.org/project/webadmin)
 - [Webassets](https://www.drupal.org/project/webassets)
 - [Gherkin Script](https://www.drupal.org/project/gherkin)
-- [Views Accordion](https://www.drupal.org/project/views_accordion)
 
 Those in turn bring in Dashboards, Media Directories, Token Filter,
 Autocomplete Deluxe, Gin Login and User Redirect, which are all listed

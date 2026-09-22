@@ -1,0 +1,33 @@
+/**
+ * @file
+ * The disclosure list style of the features listing.
+ *
+ * Expanding and collapsing is the browser's own behaviour for the details
+ * element, so this file only has to give the rows their shape.
+ */
+
+.cucumber-disclosure {
+  margin-block-end: 0.5rem;
+  border: 1px solid #d3d4d9;
+  border-radius: 2px;
+  background: #fff;
+}
+
+.cucumber-disclosure__summary {
+  padding: 0.75rem 1rem;
+  cursor: pointer;
+  font-weight: bold;
+}
+
+.cucumber-disclosure__summary:hover,
+.cucumber-disclosure__summary:focus {
+  background: #f3f4f9;
+}
+
+.cucumber-disclosure[open] .cucumber-disclosure__summary {
+  border-block-end: 1px solid #d3d4d9;
+}
+
+.cucumber-disclosure__content {
+  padding: 1rem;
+}

@@ -40,7 +40,6 @@ dependencies:
   - media_directories:media_directories_editor
   - media_directories:media_directories_ui
   - token_filter:token_filter
-  - views_accordion:views_accordion
   - autocomplete_deluxe:autocomplete_deluxe
   - gin_login:gin_login
   - user_redirect:user_redirect

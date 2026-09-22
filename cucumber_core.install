@@ -35,3 +35,41 @@ function cucumber_core_install() {
   RecipeRunner::processRecipe($dashboards_recipe);
 
 }
+
+/**
+ * Expand the features listing without jQuery UI.
+ */
+function cucumber_core_update_11001() {
+  $view = \Drupal::configFactory()->getEditable('views.view.features');
+
+  if ($view->isNew()) {
+    return t('The features view is not installed, nothing to update.');
+  }
+
+  $display = $view->get('display.default.display_options');
+  if (($display['style']['type'] ?? '') !== 'views_accordion') {
+    return t('The features view no longer uses the jQuery UI accordion, nothing to update.');
+  }
+
+  $display['style'] = [
+    'type' => 'cucumber_core_disclosure',
+    'options' => [
+      'grouping' => [],
+      'row_class' => $display['style']['options']['row_class'] ?? 'gherkin-script',
+      'default_row_class' => $display['style']['options']['default_row_class'] ?? TRUE,
+      'open_first' => TRUE,
+    ],
+  ];
+  $view->set('display.default.display_options', $display);
+
+  $modules = $view->get('dependencies.module') ?? [];
+  $modules = array_values(array_diff($modules, ['views_accordion']));
+  if (!in_array('cucumber_core', $modules, TRUE)) {
+    $modules[] = 'cucumber_core';
+  }
+  sort($modules);
+  $view->set('dependencies.module', $modules);
+  $view->save(TRUE);
+
+  return t('The features listing now uses the disclosure list style.');
+}

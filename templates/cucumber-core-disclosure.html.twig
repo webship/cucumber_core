@@ -1,0 +1,32 @@
+{#
+/**
+ * @file
+ * Theme override to display the rows of a view as HTML disclosures.
+ *
+ * Available variables:
+ * - title: The title of this group of rows. May be empty.
+ * - rows: A list of the view's rows.
+ *   - attributes: The HTML attributes of the disclosure.
+ *   - summary: The content of the summary a reader clicks to open the row.
+ *   - fields: The fields shown once the row is open.
+ *     - attributes: The HTML attributes of the field.
+ *     - content: The rendered field.
+ *   - open: Whether the row starts open.
+ * - view: The view object.
+ *
+ * @see \Drupal\cucumber_core\Hook\CucumberCoreThemeHooks::preprocessCucumberCoreDisclosure()
+ */
+#}
+{% if title %}
+  <h3>{{ title }}</h3>
+{% endif %}
+{% for row in rows %}
+  <details{{ row.attributes }}{% if row.open %} open{% endif %}>
+    <summary class="cucumber-disclosure__summary">{{ row.summary }}</summary>
+    <div class="cucumber-disclosure__content">
+      {% for field in row.fields %}
+        <div{{ field.attributes }}>{{ field.content }}</div>
+      {% endfor %}
+    </div>
+  </details>
+{% endfor %}
