@@ -1,0 +1,58 @@
+name: 'Cucumber Core foundation'
+description: 'Installs the Cucumber Core module with the base configuration it ships: the Feature Directory vocabulary, the description and features field storages, the description and Gherkin script fields on the Feature media type, the automated testing workflow, and the Gherkin script media type, text format and editor it builds on.'
+type: install
+install:
+  - cucumber_core
+config:
+  # Only create what a site does not have yet. Re-applying this recipe on a
+  # site that already has this configuration is a no-op.
+  strict: false
+  import:
+    # A recipe installs modules with the configuration installer in syncing
+    # mode, which creates simple configuration but no configuration entities
+    # (see \Drupal\Core\Recipe\RecipeRunner::installModules()). Import them
+    # here, so applying this recipe leaves the same configuration behind as
+    # `drush pm:install cucumber_core`.
+    #
+    # The views come later, in the cucumber-views recipe: the Features view
+    # filters on the moderation state, and only records a dependency on
+    # Content Moderation once the workflow below exists. The dashboards come
+    # last, in the cucumber-dashboards recipe: they place blocks of those
+    # views.
+    cucumber_core:
+      # config/install.
+      - anonymous_redirect.settings
+      - user_redirect.settings
+      - taxonomy.vocabulary.feature_directory
+      - field.storage.media.field_description
+      - field.storage.node.field_description
+      - field.storage.node.field_features
+      # config/optional.
+      - workflows.workflow.automated_testing
+      - field.field.media.feature.field_description
+      - field.field.media.feature.field_media_gherkin
+    # The Feature media type, its Gherkin script field and the Gherkin text
+    # format come from the Gherkin Script module, a dependency of this one.
+    # The fields and views above are built on them, and the same syncing mode
+    # skips them when a recipe installs Gherkin Script.
+    gherkin: '*'
+    # Drupal core's Media and Media Library modules, both dependencies of this
+    # one. The same syncing mode skips the media library form and view modes,
+    # the media library image style and the Media administration view, and the
+    # Feature media library displays of Gherkin Script cannot be saved without
+    # those modes.
+    # Only the pieces the configuration above needs: the views these two
+    # modules ship are left to the cucumber-views recipe, which imports the
+    # Cucumber Core versions of them.
+    media:
+      - media.settings
+      - core.entity_view_mode.media.full
+      - system.action.media_delete_action
+      - system.action.media_publish_action
+      - system.action.media_save_action
+      - system.action.media_unpublish_action
+    media_library:
+      - media_library.settings
+      - core.entity_form_mode.media.media_library
+      - core.entity_view_mode.media.media_library
+      - image.style.media_library

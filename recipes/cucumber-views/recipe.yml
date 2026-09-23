@@ -1,0 +1,24 @@
+name: 'Cucumber views'
+description: 'The views of the Cucumber Automated Functional Acceptance Testing Management system: the Features overview, the Media and Media library overviews, and the Features, Feature directory and My team dashboard views.'
+type: install
+install:
+  # The module that ships these views. It also ships the automated testing
+  # workflow the Features view filters on, so this recipe is applied after
+  # the Cucumber Core foundation recipe.
+  - cucumber_core
+config:
+  # Only create what a site does not have yet. Re-applying this recipe on a
+  # site that already has this configuration is a no-op.
+  strict: false
+  import:
+    # views.view.dashboard_last_content is deliberately left out: it needs
+    # the Dashboards Views module, which Cucumber Core does not depend on.
+    # Core installs that view by itself the moment dashboards_views is
+    # installed.
+    cucumber_core:
+      - views.view.features
+      - views.view.media
+      - views.view.media_library
+      - views.view.dashboard_features
+      - views.view.dashboard_feature_directory
+      - views.view.dashboard_my_team

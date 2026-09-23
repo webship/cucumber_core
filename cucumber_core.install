@@ -11,29 +11,30 @@ use Drupal\Core\Recipe\RecipeRunner;
 /**
  * Implements hook_install().
  */
-function cucumber_core_install() {
+function cucumber_core_install($is_syncing) {
+  // Configuration imports bring their own configuration.
+  if (\Drupal::isConfigSyncing()) {
+    return;
+  }
 
-  // Core skips this module's config/install entities (the Feature Directory
-  // vocabulary and its field storages) when cucumber_core is installed in one
-  // go together with its long dependency chain. Install them explicitly so a
-  // plain `drush en cucumber_core` ends up with the same configuration as the
-  // Cucumber distribution.
-  \Drupal::service('config.installer')->installDefaultConfig('module', 'cucumber_core');
+  // When the module is installed on its own, apply its default recipe. When
+  // the default recipe installs the module, the recipe is already applied.
+  if (!$is_syncing) {
+    // Core skips this module's config/install entities (the Feature Directory
+    // vocabulary and its field storages) when cucumber_core is installed in
+    // one go together with its long dependency chain. Install them explicitly
+    // so a plain `drush en cucumber_core` ends up with the same configuration
+    // as the Cucumber distribution.
+    \Drupal::service('config.installer')->installDefaultConfig('module', 'cucumber_core');
 
-  // A recipe to manage default Media Directories settings.
-  $media_directories_settings_recipe = Recipe::createFromDirectory(__DIR__ . '/recipes/media-directories-settings');
-  RecipeRunner::processRecipe($media_directories_settings_recipe);
+    // The dashboards this module ships live in config/optional, which core
+    // only installs once every module in the install list has finished.
+    // Install them now so the recipe below can grant their "can view ...
+    // dashboard" permissions.
+    \Drupal::service('config.installer')->installOptionalConfig();
 
-  // The dashboards this module ships live in config/optional, which core only
-  // installs once every module in the install list has finished. Install them
-  // now so the recipe below can grant their "can view ... dashboard"
-  // permissions.
-  \Drupal::service('config.installer')->installOptionalConfig();
-
-  // A recipe to manage the default and admin dashboards.
-  $dashboards_recipe = Recipe::createFromDirectory(__DIR__ . '/recipes/cucumber-dashboards');
-  RecipeRunner::processRecipe($dashboards_recipe);
-
+    RecipeRunner::processRecipe(Recipe::createFromDirectory(__DIR__ . '/recipes/default'));
+  }
 }
 
 /**

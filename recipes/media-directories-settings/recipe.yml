@@ -1,6 +1,12 @@
 name: Media Directories settings
 description: A recipe to manage default Media Directories settings.
 type: Testing
+install:
+  # The module whose settings this recipe changes. Recipes validate that the
+  # extension behind a config action is installed by the recipe itself, not
+  # only by the modules it pulls in, so name it here. Cucumber Core depends
+  # on it either way.
+  - media_directories
 config:
   actions:
     media_directories.settings:

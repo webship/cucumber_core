@@ -1,0 +1,14 @@
+name: 'Cucumber Core'
+description: 'Gives a site the core of the Cucumber Automated Functional Acceptance Testing Management system: the Feature media items with their Gherkin scripts, the Feature Directory vocabulary, the Features and Media views, the automated testing workflow, and the default and admin dashboards the Admin role can see.'
+type: install
+recipes:
+  # The module and the base configuration it ships, first: the recipes below
+  # are built on that configuration.
+  - foundation
+  # The Features, Media and dashboard views, after the workflow they filter on.
+  - cucumber-views
+  # Point Media Directories at the Feature Directory vocabulary.
+  - media-directories-settings
+  # The dashboards, after the views they place blocks of, and the permission
+  # that lets the Admin role see them.
+  - cucumber-dashboards
