@@ -31,6 +31,9 @@
     "drupal/dashboards": "~2.1.0",
     "drupal/gin": "~5.0",
     "drupal/gin_login": "~2.1.0",
-    "drupal/gherkin": "~1.0"
+    "drupal/gherkin": "~1.0",
+    "drupal/media_directories": "^3.0@rc",
+    "drupal/media_directories_ui": "^3.0@rc",
+    "drupal/media_directories_editor": "^3.0@rc"
   }
 }

@@ -50,6 +50,39 @@ Autocomplete Deluxe, Gin Login and User Redirect, which are all listed
 as module dependencies in `cucumber_core.info.yml`. No asset-packagist,
 `npm-asset` or `bower-asset` repositories are needed.
 
+### Non-stable dependencies
+
+Two of those projects have no stable release that works on Drupal 11:
+
+- [Media Directories](https://www.drupal.org/project/media_directories)
+  — newest release `3.0.0-rc1` (**rc**). Its stable `2.0.x` releases cap
+  at `drupal/core ^8.8.3 || ^9`, so `composer.json` pins
+  `drupal/media_directories`, `drupal/media_directories_ui` and
+  `drupal/media_directories_editor` to `^3.0@rc` rather than letting
+  drupal.org's Composer facade derive an unconstrained `*` from
+  `cucumber_core.info.yml`.
+- [Display Builder](https://www.drupal.org/project/display_builder) —
+  newest release `1.0.0-beta7` (**beta**), required by Webassets.
+- [Config Update](https://www.drupal.org/project/config_update) —
+  newest release `2.0.0-alpha4` (**alpha**), required by Webconfig.
+
+Composer only honours stability flags (`@rc`, `@beta`, `@alpha`) in the
+**root** `composer.json`; a flag inside a dependency is ignored. So a
+site that requires Cucumber Core has to relax the stability itself:
+
+```json
+{
+    "minimum-stability": "beta",
+    "prefer-stable": true,
+    "require": {
+        "drupal/config_update": "^2.0@alpha"
+    }
+}
+```
+
+With `prefer-stable` every other package still resolves to its stable
+release.
+
 
 ## Installation
 
