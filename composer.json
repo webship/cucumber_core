@@ -4,7 +4,6 @@
   "type": "drupal-module",
   "homepage": "https://www.drupal.org/project/cucumber_core",
   "license": "GPL-2.0-or-later",
-  "minimum-stability": "dev",
   "authors": [
     {
       "name": "Webship.co",
@@ -25,10 +24,10 @@
   "require": {
     "drupal/core": "^11.4 || ^12",
     "drupal/webpatches": "~12.0",
-    "drupal/webconfig": "12.0.x-dev",
-    "drupal/webdev": "12.0.x-dev",
-    "drupal/webadmin": "12.0.x-dev",
-    "drupal/webassets": "12.0.x-dev",
+    "drupal/webconfig": "~12.0",
+    "drupal/webdev": "~12.0",
+    "drupal/webadmin": "~12.0",
+    "drupal/webassets": "~12.0",
     "drupal/dashboards": "~2.1.0",
     "drupal/gin": "~5.0",
     "drupal/gin_login": "~2.1.0",
