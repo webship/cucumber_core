@@ -2,6 +2,9 @@ name: 'Cucumber Core foundation'
 description: 'Installs the Cucumber Core module with the base configuration it ships: the Feature Directory vocabulary, the description and features field storages, the description and Gherkin script fields on the Feature media type, the automated testing workflow, and the Gherkin script media type, text format and editor it builds on.'
 type: install
 install:
+  # The automated testing workflow, and the views that filter on its states,
+  # are content moderation configuration.
+  - content_moderation
   - cucumber_core
 config:
   # Only create what a site does not have yet. Re-applying this recipe on a
