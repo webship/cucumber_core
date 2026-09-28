@@ -46,7 +46,7 @@ Drupal core `^11.4 || ^12`, plus the contributed modules listed in
 - [Gherkin Script](https://www.drupal.org/project/gherkin)
 
 Those in turn bring in Dashboards, Media Directories, Token Filter,
-Autocomplete Deluxe, Gin Login and User Redirect, which are all listed
+Autocomplete Deluxe and User Redirect, which are all listed
 as module dependencies in `cucumber_core.info.yml`. No asset-packagist,
 `npm-asset` or `bower-asset` repositories are needed.
 
