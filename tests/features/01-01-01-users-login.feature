@@ -13,6 +13,7 @@ Feature: Login for every configured user
     When I add testing users
      And I navigate to "/admin/people"
     Then I should see "content_editor_user"
+     And I should see "admin_user"
      And I should see "authenticated_user"
 
   Scenario: Content editor can log in
@@ -26,3 +27,12 @@ Feature: Login for every configured user
     Then I should see "Log out"
     When I navigate to "/user"
     Then I should see "authenticated_user"
+
+  Scenario: A user with the Admin role can log in and log out by the link
+    Given I am a logged in user with the "Admin" user
+    Then I should see "Log out"
+    When I navigate to "/user"
+    Then I should see "admin_user"
+    When I set the viewport size to 1280x900
+     And I follow "Log out"
+    Then the path should be "/user/login"

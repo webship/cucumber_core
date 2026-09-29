@@ -30,6 +30,7 @@
     "drupal/webassets": "~12.0",
     "drupal/dashboards": "~2.1.0",
     "drupal/uikit_admin": "~4.0",
+    "drupal/anonymous_redirect": "~2.5",
     "drupal/gherkin": "~1.0",
     "drupal/media_directories": "^3.0@rc",
     "drupal/media_directories_ui": "^3.0@rc",

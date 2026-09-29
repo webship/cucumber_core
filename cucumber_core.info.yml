@@ -42,3 +42,4 @@ dependencies:
   - token_filter:token_filter
   - autocomplete_deluxe:autocomplete_deluxe
   - user_redirect:user_redirect
+  - anonymous_redirect:anonymous_redirect

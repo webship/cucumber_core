@@ -12,3 +12,6 @@ recipes:
   # The dashboards, after the views they place blocks of, and the permission
   # that lets the Admin role see them.
   - cucumber-dashboards
+  # What the Admin role needs to write a feature and move it through the
+  # workflow, once everything those permissions are about exists.
+  - user-role-admin

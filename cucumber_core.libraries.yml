@@ -3,3 +3,9 @@ disclosure:
   css:
     component:
       css/cucumber-core.disclosure.css: {}
+
+action-links:
+  version: VERSION
+  css:
+    component:
+      css/cucumber-core.action-links.css: {}

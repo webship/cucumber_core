@@ -12,3 +12,8 @@ logout:
     redirect_url: /user/login
   super_admin:
     redirect_url: /user/login
+ignore:
+  - '/user/reset/*'
+ignore_for:
+  login: login
+  logout: 0

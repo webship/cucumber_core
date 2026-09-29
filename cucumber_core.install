@@ -74,3 +74,313 @@ function cucumber_core_update_11001() {
 
   return t('The features listing now uses the disclosure list style.');
 }
+
+/**
+ * Send anonymous visitors to the log in page.
+ */
+function cucumber_core_update_12001() {
+  $module_handler = \Drupal::moduleHandler();
+  if ($module_handler->moduleExists('anonymous_redirect')) {
+    return t('Anonymous Redirect is already installed, nothing to update.');
+  }
+
+  // Earlier releases imported the settings of Anonymous Redirect without
+  // installing the module. The settings have to go before the module can be
+  // installed, as a module may not find its own configuration in place.
+  $orphan = \Drupal::configFactory()->getEditable('anonymous_redirect.settings');
+  $overrides = '';
+  if (!$orphan->isNew()) {
+    $overrides = (string) $orphan->get('redirect_url_overrides');
+    $orphan->delete();
+  }
+
+  \Drupal::service('module_installer')->install(['anonymous_redirect']);
+
+  // The pages of a password reset stay open, so a person who forgot a
+  // password can ask for a new one.
+  $paths = preg_split('/\R/', $overrides, -1, PREG_SPLIT_NO_EMPTY) ?: [];
+  foreach (['/user/password', '/user/reset/*'] as $path) {
+    if (!in_array($path, $paths, TRUE)) {
+      $paths[] = $path;
+    }
+  }
+  \Drupal::configFactory()->getEditable('anonymous_redirect.settings')
+    ->set('enable_redirect', TRUE)
+    ->set('redirect_url', '/user/login')
+    ->set('redirect_url_overrides', implode("\r\n", $paths))
+    ->save();
+
+  return t('Anonymous visitors are now sent to the log in page.');
+}
+
+/**
+ * Name the steps of the automated testing workflow after where they lead.
+ */
+function cucumber_core_update_12002() {
+  $workflow = \Drupal::configFactory()->getEditable('workflows.workflow.automated_testing');
+  if ($workflow->isNew()) {
+    return t('The automated testing workflow is not installed, nothing to update.');
+  }
+
+  $settings = $workflow->get('type_settings');
+
+  // The labels an earlier release shipped, and the ones that say where the
+  // step leads. A label somebody changed is left alone.
+  $labels = [
+    'create_new_task' => ['Create New Task', 'Move to To Do'],
+    'to_do' => ['To Do', 'Move to In Progress'],
+    'in_progress' => ['In Progress', 'Move to Implemented'],
+    'implemented' => ['Implemented', 'Publish'],
+  ];
+  foreach ($labels as $id => [$old, $new]) {
+    if (($settings['transitions'][$id]['label'] ?? NULL) === $old) {
+      $settings['transitions'][$id]['label'] = $new;
+    }
+  }
+
+  // The way back to Draft.
+  if (!isset($settings['transitions']['back_to_draft']) && isset($settings['states']['draft'])) {
+    $settings['transitions']['back_to_draft'] = [
+      'label' => 'Send back to Draft',
+      'from' => array_keys($settings['states']),
+      'to' => 'draft',
+      'weight' => -3,
+    ];
+    sort($settings['transitions']['back_to_draft']['from']);
+  }
+
+  // A feature that is moved to one of these states shows that state in the
+  // listings: the revision in that state is the current one.
+  foreach (['to_do', 'in_progress', 'implemented'] as $id) {
+    if (isset($settings['states'][$id])) {
+      $settings['states'][$id]['default_revision'] = TRUE;
+    }
+  }
+  if (($settings['states']['draft']['weight'] ?? NULL) === 1) {
+    $settings['states']['draft']['weight'] = -4;
+  }
+
+  ksort($settings['transitions']);
+  $workflow->set('type_settings', $settings)->save(TRUE);
+
+  return t('The steps of the automated testing workflow are named after where they lead, and a feature can go back to Draft.');
+}
+
+/**
+ * Guard the Features page and tidy the Cucumber listings.
+ */
+function cucumber_core_update_12003() {
+  $factory = \Drupal::configFactory();
+  $empty_text = static fn (string $text): array => [
+    'area_text_custom' => [
+      'id' => 'area_text_custom',
+      'table' => 'views',
+      'field' => 'area_text_custom',
+      'relationship' => 'none',
+      'group_type' => 'group',
+      'admin_label' => '',
+      'plugin_id' => 'text_custom',
+      'empty' => TRUE,
+      'content' => $text,
+      'tokenize' => FALSE,
+    ],
+  ];
+  // A key the date formatter has no configuration schema for.
+  $clean_fields = static function (array &$options): void {
+    foreach ($options['fields'] ?? [] as $id => $field) {
+      if (isset($field['settings']['time_diff']) && array_key_exists('description', $field['settings']['time_diff'])) {
+        unset($options['fields'][$id]['settings']['time_diff']['description']);
+      }
+    }
+  };
+
+  // The filter on the name looked at the title of the thumbnail, and asked
+  // for the whole of it: it found nothing. It looks for a part of the name.
+  $name_filter = static function (array &$options): void {
+    if (($options['filters']['thumbnail__title']['field'] ?? '') !== 'thumbnail__title') {
+      return;
+    }
+    $filters = [];
+    foreach ($options['filters'] as $id => $filter) {
+      if ($id === 'thumbnail__title') {
+        $id = 'name';
+        $filter['id'] = 'name';
+        $filter['field'] = 'name';
+        $filter['entity_field'] = 'name';
+        $filter['operator'] = 'contains';
+        $filter['expose']['operator_id'] = 'name_op';
+        $filter['expose']['operator'] = 'name_op';
+        $filter['expose']['identifier'] = 'name';
+      }
+      $filters[$id] = $filter;
+    }
+    $options['filters'] = $filters;
+  };
+
+  $view = $factory->getEditable('views.view.features');
+  if (!$view->isNew()) {
+    $displays = $view->get('display');
+    foreach ($displays as &$display) {
+      $clean_fields($display['display_options']);
+      $name_filter($display['display_options']);
+    }
+    unset($display);
+
+    $default = &$displays['default']['display_options'];
+    if (($default['access']['options']['perm'] ?? '') === 'view media') {
+      $default['access'] = [
+        'type' => 'perm',
+        'options' => ['perm' => 'access features page'],
+      ];
+    }
+    if (empty($default['empty'])) {
+      $default['empty'] = $empty_text('No features yet.');
+    }
+    unset($default);
+
+    if (isset($displays['features_page'])) {
+      $page = &$displays['features_page']['display_options'];
+      // The page is a listing: nothing is selected to be inserted.
+      unset(
+        $page['fields']['media_library_select_form'],
+        $page['style']['options']['columns']['media_library_select_form'],
+        $page['style']['options']['info']['media_library_select_form'],
+      );
+      // The page lists every feature, also the ones no product, component
+      // or project refers to yet.
+      if (($page['defaults']['relationships'] ?? TRUE) === FALSE) {
+        unset($page['relationships']['reverse__node__field_features']);
+      }
+      unset($page);
+    }
+    $view->set('display', $displays)->save(TRUE);
+  }
+
+  $listings = [
+    'dashboard_features' => ['No features in this state yet.', []],
+    'dashboard_feature_directory' => [
+      'No feature directories yet.',
+      [
+        'add_title' => 'Add Directory',
+        'add_path' => '/admin/structure/taxonomy/manage/feature_directory/add',
+        'more_title' => 'See More',
+        'more_path' => '/admin/structure/taxonomy/manage/feature_directory/overview',
+      ],
+    ],
+    'dashboard_my_team' => [
+      'No team members yet.',
+      [
+        'add_title' => 'Add User',
+        'add_path' => '/admin/people/create',
+        'more_title' => 'See More',
+        'more_path' => '/admin/people',
+      ],
+    ],
+  ];
+  foreach ($listings as $id => [$text, $links]) {
+    $view = $factory->getEditable('views.view.' . $id);
+    if ($view->isNew()) {
+      continue;
+    }
+    $options = $view->get('display.default.display_options');
+    $clean_fields($options);
+    $name_filter($options);
+    if (empty($options['empty'])) {
+      $options['empty'] = $empty_text($text);
+    }
+    // The footer an earlier release shipped relied on the styles of a theme
+    // Cucumber no longer uses. A footer somebody changed is left alone.
+    $footer = (string) ($options['footer']['area_text_custom']['content'] ?? '');
+    if ($links && str_contains($footer, 'class="left"') && str_contains($footer, 'class="right"')) {
+      $options['footer'] = [
+        'cucumber_core_action_links' => [
+          'id' => 'cucumber_core_action_links',
+          'table' => 'views',
+          'field' => 'cucumber_core_action_links',
+          'relationship' => 'none',
+          'group_type' => 'group',
+          'admin_label' => '',
+          'plugin_id' => 'cucumber_core_action_links',
+          'empty' => TRUE,
+        ] + $links,
+      ];
+      $modules = $view->get('dependencies.module') ?? [];
+      if (!in_array('cucumber_core', $modules, TRUE)) {
+        $modules[] = 'cucumber_core';
+        sort($modules);
+        $view->set('dependencies.module', $modules);
+      }
+    }
+    $view->set('display.default.display_options', $options)->save(TRUE);
+  }
+
+  return t('The Features page asks for its own permission, and the Cucumber listings say when they are empty.');
+}
+
+/**
+ * Let the Admin role write a feature and move it through the workflow.
+ */
+function cucumber_core_update_12004() {
+  /** @var \Drupal\user\RoleInterface|null $role */
+  $role = \Drupal::entityTypeManager()->getStorage('user_role')->load('admin');
+  if (!$role || $role->isAdmin()) {
+    return t('The Admin role needs no permissions, nothing to update.');
+  }
+
+  $wanted = [
+    'access features page',
+    'view media',
+    'create feature media',
+    'edit own feature media',
+    'edit any feature media',
+    'delete own feature media',
+    'view own unpublished media',
+    'view any feature media revisions',
+    'use text format gherkin',
+    'use automated_testing transition back_to_draft',
+    'use automated_testing transition create_new_task',
+    'use automated_testing transition to_do',
+    'use automated_testing transition in_progress',
+    'use automated_testing transition implemented',
+    'view latest version',
+    'view any unpublished content',
+    'access taxonomy overview',
+    'create terms in feature_directory',
+    'edit terms in feature_directory',
+    'access media overview',
+    'access media directories ui browser',
+    'access media_directories_editor_browser entity browser pages',
+    'access media_directories_modal entity browser pages',
+    'access media_directories_overview entity browser pages',
+    'access user profiles',
+    'view the administration theme',
+  ];
+  // Only what this site knows: a site may have removed a module or a piece
+  // of configuration a permission stands for.
+  $known = array_keys(\Drupal::service('user.permissions')->getPermissions());
+  foreach (array_intersect($wanted, $known) as $permission) {
+    $role->grantPermission($permission);
+  }
+  $role->save();
+
+  return t('The Admin role can write a feature and move it through the automated testing workflow.');
+}
+
+/**
+ * Keep the one-time log in link on the page that sets a new password.
+ */
+function cucumber_core_update_12005() {
+  $settings = \Drupal::configFactory()->getEditable('user_redirect.settings');
+  if ($settings->isNew() || $settings->get('ignore')) {
+    return t('The paths User Redirect leaves alone are already set, nothing to update.');
+  }
+
+  // A person who follows a one-time log in link has to land on the account
+  // form, where the new password is set, not on a dashboard.
+  $settings
+    ->set('ignore', ['/user/reset/*'])
+    ->set('ignore_for', ['login' => 'login', 'logout' => 0])
+    ->save();
+
+  return t('A one-time log in link leads to the page that sets a new password.');
+}

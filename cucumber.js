@@ -28,6 +28,13 @@ module.exports = {
           password: 'dD.123123ddd',
           isAdmin: true,
         },
+        // The role Cucumber Core creates and grants the feature permissions.
+        Admin: {
+          username: 'admin_user',
+          email: 'admin_user@example.test',
+          password: 'dD.123123ddd',
+          roles: ['admin'],
+        },
         'Content editor': {
           username: 'content_editor_user',
           email: 'content_editor_user@example.test',

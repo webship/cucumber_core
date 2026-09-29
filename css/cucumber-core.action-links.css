@@ -1,0 +1,20 @@
+/**
+ * @file
+ * The links at the foot of a dashboard listing.
+ *
+ * The link that adds an item sits at the start of the row and the link to
+ * the full listing at the end, in every theme.
+ */
+
+.cucumber-core-action-links {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem 1rem;
+  margin-block-start: 0.75rem;
+}
+
+.cucumber-core-action-links__link--more {
+  margin-inline-start: auto;
+}

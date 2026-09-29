@@ -5,6 +5,9 @@ install:
   # The automated testing workflow, and the views that filter on its states,
   # are content moderation configuration.
   - content_moderation
+  # Sends anonymous visitors to the log in page: Cucumber has nothing to show
+  # to people who are not signed in.
+  - anonymous_redirect
   - cucumber_core
 config:
   # Only create what a site does not have yet. Re-applying this recipe on a
@@ -24,7 +27,6 @@ config:
     # views.
     cucumber_core:
       # config/install.
-      - anonymous_redirect.settings
       - user_redirect.settings
       - taxonomy.vocabulary.feature_directory
       - field.storage.media.field_description
@@ -59,3 +61,25 @@ config:
       - core.entity_form_mode.media.media_library
       - core.entity_view_mode.media.media_library
       - image.style.media_library
+    # The image styles of Drupal core's Image module: the Media overview and
+    # the thumbnails of the listings use them, and the same syncing mode
+    # skips them.
+    image:
+      - image.style.thumbnail
+      - image.style.medium
+      - image.style.large
+      - image.style.wide
+    # The browsers that file a feature in a feature directory, the view and
+    # the image style they are built on, and the button that embeds a media
+    # item. The permissions the roles get for those browsers only exist once
+    # the browsers do.
+    media_directories_ui: '*'
+    media_directories_editor: '*'
+  actions:
+    anonymous_redirect.settings:
+      simpleConfigUpdate:
+        enable_redirect: true
+        redirect_url: /user/login
+        # The pages of a password reset stay open, so a person who forgot
+        # a password can ask for a new one.
+        redirect_url_overrides: "/user/password\r\n/user/reset/*"

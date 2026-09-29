@@ -3,7 +3,7 @@
  * Cucumber Core steps: shared Webship login/provisioning helpers.
  */
 
-const { Given, Then } = require('@cucumber/cucumber');
+const { Given, When, Then } = require('@cucumber/cucumber');
 const { friendly } = require('webship-js/tests/step-definitions/webship');
 
 /**
@@ -162,3 +162,55 @@ Then(/^(?:I |we )?should see the button "([^"]*)"$/, async function (text) {
     await locator.waitFor({ state: 'visible', timeout: 10000 });
   }, `Expected to find a button with text "${text}"`);
 });
+
+/**
+ * Set the content of the Ace editor that replaced a textarea, then wait for
+ * ace_editor's debounced sync back to the hidden textarea.
+ *
+ * Example #1: When I fill in the Ace editor with:
+ * Example #2: And I fill in the Ace editor with:
+ * Example #3: When we fill in the Ace editor with:
+ * Example #4: And we fill in the Ace editor with:
+ * Example #5: When fill in the Ace editor with:
+ */
+When(/^(?:I |we )?fill in the Ace editor with:$/, async function (text) {
+  await attempt(async () => {
+    await this.page.waitForFunction(
+      () => window.ace && document.querySelector('.ace_editor'),
+      null,
+      { timeout: 15000 },
+    );
+    await this.page.evaluate((value) => {
+      window.ace
+        .edit(document.querySelector('.ace_editor'))
+        .session.setValue(value);
+    }, text);
+    await this.page.waitForTimeout(700);
+  }, 'Could not fill in the Ace editor');
+});
+
+/**
+ * Checks a computed CSS property of the first element matching a selector.
+ *
+ * Example #1: Then ".cucumber-core-action-links" should have the CSS "display" set to "flex"
+ * Example #2: And ".ace_editor" should have the CSS "resize" set to "vertical"
+ * Example #3: Then "h1" should have the CSS "display" set to "block"
+ * Example #4: And "table" should have the CSS "display" set to "table"
+ * Example #5: Then "nav" should have the CSS "position" set to "sticky"
+ */
+Then(
+  /^"([^"]*)" should have the CSS "([^"]*)" set to "([^"]*)"$/,
+  async function (selector, property, expected) {
+    const locator = this.page.locator(selector).first();
+    await locator.waitFor({ state: 'visible', timeout: 15000 });
+    const actual = await locator.evaluate(
+      (el, prop) => getComputedStyle(el).getPropertyValue(prop),
+      property,
+    );
+    if (actual.trim() !== expected) {
+      throw new Error(
+        `Expected ${property} "${expected}" on ${selector}, got "${actual}".`,
+      );
+    }
+  },
+);

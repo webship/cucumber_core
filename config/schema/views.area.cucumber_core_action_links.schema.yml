@@ -1,0 +1,16 @@
+views.area.cucumber_core_action_links:
+  type: views_area
+  label: "Action links"
+  mapping:
+    add_title:
+      type: label
+      label: "The text of the link that adds an item"
+    add_path:
+      type: string
+      label: "The path of the link that adds an item"
+    more_title:
+      type: label
+      label: "The text of the link to the full listing"
+    more_path:
+      type: string
+      label: "The path of the link to the full listing"

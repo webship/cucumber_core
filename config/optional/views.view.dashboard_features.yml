@@ -283,7 +283,6 @@ display:
               past_format: '@interval ago'
               granularity: 2
               refresh: 60
-              description: ''
           group_column: value
           group_columns: {  }
           group_rows: true
@@ -367,7 +366,18 @@ display:
       cache:
         type: tag
         options: {  }
-      empty: {  }
+      empty:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text_custom
+          empty: true
+          content: 'No features in this state yet.'
+          tokenize: false
       sorts:
         mid:
           id: mid
@@ -407,29 +417,29 @@ display:
           value:
             feature: feature
           group: 1
-        thumbnail__title:
-          id: thumbnail__title
+        name:
+          id: name
           table: media_field_data
-          field: thumbnail__title
+          field: name
           relationship: none
           group_type: group
           admin_label: ''
           entity_type: media
-          entity_field: thumbnail
+          entity_field: name
           plugin_id: string
-          operator: '='
+          operator: contains
           value: ''
           group: 1
           exposed: true
           expose:
-            operator_id: thumbnail__title_op
+            operator_id: name_op
             label: Title
             description: ''
             use_operator: false
-            operator: thumbnail__title_op
+            operator: name_op
             operator_limit_selection: false
             operator_list: {  }
-            identifier: thumbnail__title
+            identifier: name
             required: false
             remember: false
             multiple: false

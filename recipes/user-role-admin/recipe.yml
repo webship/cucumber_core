@@ -1,0 +1,55 @@
+name: 'Cucumber Core - admin'
+description: 'Lets the Admin role do its work: write a feature with its Gherkin script, file it in a feature directory, move it through the automated testing workflow and reach the listings.'
+type: Testing
+install:
+  # The modules that define the permissions below. Cucumber Core depends on
+  # every one of them; they are named here, so this recipe can be applied on
+  # its own.
+  - content_moderation
+  - media
+  - taxonomy
+  - media_directories_ui
+  - cucumber_core
+config:
+  actions:
+    user.role.admin:
+      # The Cucumber distribution ships an "admin" role. On a plain Drupal
+      # site that role does not exist yet, so create it before granting
+      # anything to it.
+      createIfNotExists:
+        label: Admin
+        is_admin: false
+      grantPermissions:
+        # The Features page.
+        - 'access features page'
+        # A feature, with its Gherkin script.
+        - 'view media'
+        - 'create feature media'
+        - 'edit own feature media'
+        - 'edit any feature media'
+        - 'delete own feature media'
+        - 'view own unpublished media'
+        - 'view any feature media revisions'
+        - 'use text format gherkin'
+        # The automated testing workflow, every step of it.
+        - 'use automated_testing transition back_to_draft'
+        - 'use automated_testing transition create_new_task'
+        - 'use automated_testing transition to_do'
+        - 'use automated_testing transition in_progress'
+        - 'use automated_testing transition implemented'
+        - 'view latest version'
+        - 'view any unpublished content'
+        # The feature directories, and the browser that files a feature in
+        # one of them.
+        - 'access taxonomy overview'
+        - 'create terms in feature_directory'
+        - 'edit terms in feature_directory'
+        - 'access media overview'
+        - 'access media directories ui browser'
+        - 'access media_directories_editor_browser entity browser pages'
+        - 'access media_directories_modal entity browser pages'
+        - 'access media_directories_overview entity browser pages'
+        # The team listing of the admin dashboard.
+        - 'access user profiles'
+        # The administration screens, in the administration theme.
+        - 'view the administration theme'

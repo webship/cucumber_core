@@ -1,6 +1,13 @@
 langcode: en
 status: true
-dependencies: {  }
+dependencies:
+  config:
+    - views.view.dashboard_feature_directory
+    - views.view.dashboard_features
+    - views.view.dashboard_my_team
+  module:
+    - dashboards
+    - views
 id: admin_dashboard
 admin_label: 'Admin Dashboard'
 category: ''

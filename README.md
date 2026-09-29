@@ -18,19 +18,34 @@ Gherkin feature scripts are written, classified and moderated.
 ## Features
 
 - A "Feature Directory" taxonomy vocabulary used to classify features.
-- An "Automated testing" content moderation workflow.
+- An "Automated testing" content moderation workflow. A feature goes from
+  Draft to To Do, In Progress, Implemented and Published, and every step
+  is named after where it leads: "Move to To Do", "Move to In Progress",
+  "Move to Implemented", "Publish" and "Send back to Draft". The listings
+  show the state a feature was moved to.
 - A `field_description` field on media and a `field_description` plus
   `field_features` field storage on nodes.
 - Views for the feature library, the media library and the dashboard
   blocks (features, feature directory, last content, my team).
 - A "Default Dashboard" and an "Admin Dashboard" built from the
   `dashboards` module, plus an `admin` role that may view both.
-- An `access features page` permission.
-- Two recipes, run from `hook_install()`:
+- An `access features page` permission, which the Features page at
+  `/features` asks for.
+- Anonymous visitors are sent to `/user/login` by
+  [Anonymous Redirect](https://www.drupal.org/project/anonymous_redirect).
+  The pages of a password reset stay open, and a one-time log in link
+  leads to the account form, where the new password is set.
+- Recipes, run from `hook_install()`:
+  - `recipes/foundation` installs the module with its configuration and
+    the settings of Anonymous Redirect.
   - `recipes/media-directories-settings` points Media Directories at
     the `feature_directory` vocabulary.
   - `recipes/cucumber-dashboards` creates the `admin` role when it is
     missing and grants it both dashboard permissions.
+  - `recipes/user-role-admin` lets the `admin` role write a feature with
+    its Gherkin script, file it in a feature directory and move it
+    through every step of the workflow. The role gets no permission that
+    administers the site.
 
 
 ## Requirements
@@ -44,6 +59,7 @@ Drupal core `^11.4 || ^12`, plus the contributed modules listed in
 - [Webadmin](https://www.drupal.org/project/webadmin)
 - [Webassets](https://www.drupal.org/project/webassets)
 - [Gherkin Script](https://www.drupal.org/project/gherkin)
+- [Anonymous Redirect](https://www.drupal.org/project/anonymous_redirect)
 
 Those in turn bring in Dashboards, Media Directories, Token Filter,
 Autocomplete Deluxe and User Redirect, which are all listed
@@ -104,8 +120,10 @@ result at:
 - `admin/config/workflow/workflows` - the Automated testing workflow.
 - `admin/config/media/media_directories` - the directory vocabulary.
 - `admin/structure/dashboards` - the Default and Admin dashboards.
-- `admin/people/permissions/admin` - the dashboard permissions granted
-  to the `admin` role.
+- `admin/people/permissions/admin` - the permissions granted to the
+  `admin` role.
+- `admin/config/system/anonymous-redirect` - where anonymous visitors
+  are sent.
 
 
 ## Usage

@@ -2,6 +2,7 @@ langcode: en
 status: true
 dependencies:
   module:
+    - cucumber_core
     - user
 id: dashboard_my_team
 label: 'Dashboard My Team'
@@ -140,7 +141,18 @@ display:
       cache:
         type: tag
         options: {  }
-      empty: {  }
+      empty:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text_custom
+          empty: true
+          content: 'No team members yet.'
+          tokenize: false
       sorts:
         created:
           id: created
@@ -227,17 +239,19 @@ display:
       link_url: /admin/people
       header: {  }
       footer:
-        area_text_custom:
-          id: area_text_custom
+        cucumber_core_action_links:
+          id: cucumber_core_action_links
           table: views
-          field: area_text_custom
+          field: cucumber_core_action_links
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: text_custom
-          empty: false
-          content: '<a class="left" href="[site:base-path]/admin/people/create">Add User</a><a class="right" href="[site:base-path]/admin/people">See More</a>'
-          tokenize: false
+          plugin_id: cucumber_core_action_links
+          empty: true
+          add_title: 'Add User'
+          add_path: /admin/people/create
+          more_title: 'See More'
+          more_path: /admin/people
       display_extenders: {  }
     cache_metadata:
       max-age: -1

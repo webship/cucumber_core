@@ -4,6 +4,7 @@ dependencies:
   config:
     - taxonomy.vocabulary.feature_directory
   module:
+    - cucumber_core
     - taxonomy
     - user
 id: dashboard_feature_directory
@@ -92,7 +93,18 @@ display:
       cache:
         type: tag
         options: {  }
-      empty: {  }
+      empty:
+        area_text_custom:
+          id: area_text_custom
+          table: views
+          field: area_text_custom
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: text_custom
+          empty: true
+          content: 'No feature directories yet.'
+          tokenize: false
       sorts:
         weight:
           id: weight
@@ -167,17 +179,19 @@ display:
       relationships: {  }
       header: {  }
       footer:
-        area_text_custom:
-          id: area_text_custom
+        cucumber_core_action_links:
+          id: cucumber_core_action_links
           table: views
-          field: area_text_custom
+          field: cucumber_core_action_links
           relationship: none
           group_type: group
           admin_label: ''
-          plugin_id: text_custom
-          empty: false
-          content: '<a class="left" href="[site:base-path]/admin/structure/taxonomy/manage/feature_directory/add">Add Directory</a><a class="right" href="[site:base-path]/admin/structure/taxonomy/manage/feature_directory/overview">See More</a>'
-          tokenize: false
+          plugin_id: cucumber_core_action_links
+          empty: true
+          add_title: 'Add Directory'
+          add_path: /admin/structure/taxonomy/manage/feature_directory/add
+          more_title: 'See More'
+          more_path: /admin/structure/taxonomy/manage/feature_directory/overview
       display_extenders: {  }
     cache_metadata:
       max-age: -1

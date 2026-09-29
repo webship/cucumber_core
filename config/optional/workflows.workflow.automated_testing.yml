@@ -12,19 +12,19 @@ type_settings:
   states:
     draft:
       label: Draft
-      weight: 1
+      weight: -4
       published: false
       default_revision: false
     implemented:
       label: Implemented
       weight: -1
       published: true
-      default_revision: false
+      default_revision: true
     in_progress:
       label: 'In Progress'
       weight: -2
       published: true
-      default_revision: false
+      default_revision: true
     published:
       label: Published
       weight: 0
@@ -34,10 +34,20 @@ type_settings:
       label: 'To Do'
       weight: -3
       published: true
-      default_revision: false
+      default_revision: true
   transitions:
+    back_to_draft:
+      label: 'Send back to Draft'
+      from:
+        - draft
+        - implemented
+        - in_progress
+        - published
+        - to_do
+      to: draft
+      weight: -3
     create_new_task:
-      label: 'Create New Task'
+      label: 'Move to To Do'
       from:
         - draft
         - implemented
@@ -47,7 +57,7 @@ type_settings:
       to: to_do
       weight: -2
     implemented:
-      label: Implemented
+      label: Publish
       from:
         - implemented
         - in_progress
@@ -56,7 +66,7 @@ type_settings:
       to: published
       weight: 1
     in_progress:
-      label: 'In Progress'
+      label: 'Move to Implemented'
       from:
         - implemented
         - in_progress
@@ -64,7 +74,7 @@ type_settings:
       to: implemented
       weight: 0
     to_do:
-      label: 'To Do'
+      label: 'Move to In Progress'
       from:
         - implemented
         - in_progress
