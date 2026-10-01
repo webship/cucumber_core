@@ -10,6 +10,6 @@ install:
 config:
   actions:
     media_directories.settings:
-      simple_config_update:
+      simpleConfigUpdate:
         directory_taxonomy: feature_directory
         all_files_in_root: true

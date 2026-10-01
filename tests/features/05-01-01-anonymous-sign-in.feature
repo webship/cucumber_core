@@ -26,7 +26,9 @@ Feature: Anonymous visitors reach the log in page
     Given I am an anonymous user
     When I navigate to "/user/password"
      And I fill in "Username or email address" with "admin_user"
-     And I press "Submit"
+     # UIkit Admin, the theme of the sign-in screens, labels the button
+     # "Send reset link" (core says "Submit").
+     And I press "Send reset link"
     Then the path should be "/user/login"
      And I should not see "Access denied"
 

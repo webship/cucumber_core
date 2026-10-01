@@ -6,6 +6,11 @@ include:
       - "/includes/include.drupalci.variables.yml"
       - "/includes/include.drupalci.workflows.yml"
 
+variables:
+  # Also test with the next major Drupal version and the newest PHP.
+  OPT_IN_TEST_NEXT_MAJOR: 1
+  OPT_IN_TEST_MAX_PHP: 1
+
 cspell:
   stage: validate
   image: node:20
@@ -109,6 +114,9 @@ stylelint:
     # Module install.
     - $CI_PROJECT_DIR/vendor/bin/drush --root=$CI_PROJECT_DIR/$_WEB_ROOT en cucumber_core -y
     - $CI_PROJECT_DIR/vendor/bin/drush --root=$CI_PROJECT_DIR/$_WEB_ROOT cache:rebuild
+    # A test runner has no mail server: collect the mails instead of sending
+    # them, so the password reset form returns instead of waiting on a mailer.
+    - $CI_PROJECT_DIR/vendor/bin/drush --root=$CI_PROJECT_DIR/$_WEB_ROOT config:set system.mail interface.default test_mail_collector -y
     # Per-role test users are provisioned by the first scenario in the suite
     # (01-01-01-users-login.feature, "Webmaster can log in and provision
     # testing users"), so no separate drush step is needed here.
@@ -150,3 +158,9 @@ webship-js-test:
 composer:
   variables:
     DRUPAL_CORE: "11.4.8"
+
+# Drupal 12: let Composer install the contributed modules that do not declare
+# ^12 yet.
+composer (next major):
+  variables:
+    _LENIENT_ALLOW_LIST: 'ai,ai_agents,ai_assistant_api,ai_chatbot,ai_content_suggestions,ai_image_alt_text,ai_logging,ai_penpot,ai_playwright,ai_provider_anthropic,ai_provider_huggingface,ai_provider_ollama,ai_provider_openai,ai_provider_xai,ai_translate,antibot,autocomplete_deluxe,automatic_updates,better_exposed_filters,captcha,coffee,config_filter,config_ignore,config_import_single,config_rewrite,config_split,config_update,config_update_ui,consumers,crop,ctools,dashboards,display_builder,display_builder_entity_view,display_builder_page_layout,display_builder_ui,display_builder_views,drupical,easy_breadcrumb,easy_encryption,editor_advanced_link,embed,entity_embed,field_group,field_validation,flood_control,focal_point,friendlycaptcha,gemini_provider,google_analytics,google_tag,honeypot,inline_entity_form,jsonapi_extras,key,klaro,login_emailusername,manage_display,media_directories_editor,media_directories_ui,media_remote_audio,media_remote_image,metatag,openapi,openapi_jsonapi,openapi_rest,openapi_ui,openapi_ui_swagger,pathauto,recaptcha_v3,redirect,restui,sam,schema_metatag,schemata,schemata_json_schema,seckit,security_review,shield,simple_oauth,smart_trim,tagify,token,token_filter,tracker,user_redirect,view_password,views_bulk_edit,views_bulk_operations,webform,xmlsitemap,yoast_seo'
