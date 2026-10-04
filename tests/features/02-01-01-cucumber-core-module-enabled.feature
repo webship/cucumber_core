@@ -14,7 +14,7 @@ Feature: Cucumber Core module and its dependencies are enabled
   Scenario: The modules Cucumber Core builds on are enabled
     When I navigate to "/admin/modules"
     Then the element "#edit-modules-gherkin-enable" with the attribute "checked" and the value "checked" should exist
-     And the element "#edit-modules-dashboards-enable" with the attribute "checked" and the value "checked" should exist
+     And the element "#edit-modules-webdashboard-enable" with the attribute "checked" and the value "checked" should exist
      And the element "#edit-modules-media-directories-enable" with the attribute "checked" and the value "checked" should exist
      And the element "#edit-modules-user-redirect-enable" with the attribute "checked" and the value "checked" should exist
 

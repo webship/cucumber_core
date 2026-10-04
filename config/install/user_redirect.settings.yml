@@ -1,10 +1,10 @@
 login:
   authenticated:
-    redirect_url: /dashboard/default_dashboard
+    redirect_url: /webdashboard/default_dashboard
   admin:
-    redirect_url: /dashboard/admin_dashboard
+    redirect_url: /webdashboard/admin_dashboard
   super_admin:
-    redirect_url: /dashboard/admin_dashboard
+    redirect_url: /webdashboard/admin_dashboard
 logout:
   authenticated:
     redirect_url: /user/login

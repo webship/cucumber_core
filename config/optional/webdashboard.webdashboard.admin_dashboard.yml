@@ -1,0 +1,75 @@
+langcode: en
+status: true
+dependencies:
+  config:
+    - display_builder.profile.default
+    - views.view.dashboard_feature_directory
+    - views.view.dashboard_features
+    - views.view.dashboard_my_team
+  module:
+    - ui_patterns
+    - views
+    - webdashboard
+id: admin_dashboard
+admin_label: 'Admin Dashboard'
+category: ''
+frontend: false
+weight: 0
+profile: default
+sources:
+  -
+    node_id: admin_layout
+    source_id: component
+    source:
+      component:
+        component_id: 'webdashboard:dashboard_three_columns'
+        slots:
+          one:
+            sources:
+              -
+                node_id: admin_references
+                source_id: block
+                source:
+                  plugin_id: 'webdashboard_item:add_content_menu'
+                  'webdashboard_item:add_content_menu':
+                    label: References
+                    label_display: visible
+                    include_destination: false
+                    items:
+                      product:
+                        weight: '0'
+                      project:
+                        weight: '0'
+                      component:
+                        weight: '0'
+          two:
+            sources:
+              -
+                node_id: admin_my_team
+                source_id: block
+                source:
+                  plugin_id: 'webdashboard_item:view_embed'
+                  'webdashboard_item:view_embed':
+                    label: 'My Team'
+                    label_display: visible
+                    view: 'dashboard_my_team:block_1'
+          three:
+            sources:
+              -
+                node_id: admin_feature_directory
+                source_id: block
+                source:
+                  plugin_id: 'webdashboard_item:view_embed'
+                  'webdashboard_item:view_embed':
+                    label: 'Feature Directory'
+                    label_display: visible
+                    view: 'dashboard_feature_directory:block_1'
+  -
+    node_id: admin_features
+    source_id: block
+    source:
+      plugin_id: 'webdashboard_item:view_embed'
+      'webdashboard_item:view_embed':
+        label: Features
+        label_display: visible
+        view: 'dashboard_features:dashboard_features'

@@ -119,7 +119,7 @@ result at:
 - `admin/structure/taxonomy` - the Feature Directory vocabulary.
 - `admin/config/workflow/workflows` - the Automated testing workflow.
 - `admin/config/media/media_directories` - the directory vocabulary.
-- `admin/structure/dashboards` - the Default and Admin dashboards.
+- `admin/structure/webdashboards` - the Default and Admin dashboards.
 - `admin/people/permissions/admin` - the permissions granted to the
   `admin` role.
 - `admin/config/system/anonymous-redirect` - where anonymous visitors
@@ -128,8 +128,8 @@ result at:
 
 ## Usage
 
-Log in and open `/dashboard/admin_dashboard` or
-`/dashboard/default_dashboard`. Feature scripts are added as "Feature"
+Log in and open `/webdashboard/admin_dashboard` or
+`/webdashboard/default_dashboard`. Feature scripts are added as "Feature"
 media items (provided by the Gherkin Script module), filed under a
 Feature Directory term, and moved through the Automated testing
 workflow.

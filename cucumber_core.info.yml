@@ -27,7 +27,7 @@ dependencies:
   - drupal:media
   - drupal:media_library
   - drupal:views_ui
-  - dashboards:dashboards
+  - webdashboard:webdashboard
   - webconfig:webconfig
   - webdev:webdev
   - webadmin:webadmin

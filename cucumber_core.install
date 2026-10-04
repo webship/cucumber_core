@@ -30,7 +30,7 @@ function cucumber_core_install($is_syncing) {
     // The dashboards this module ships live in config/optional, which core
     // only installs once every module in the install list has finished.
     // Install them now so the recipe below can grant their "can view ...
-    // dashboard" permissions.
+    // webdashboard" permissions.
     \Drupal::service('config.installer')->installOptionalConfig();
 
     RecipeRunner::processRecipe(Recipe::createFromDirectory(__DIR__ . '/recipes/default'));

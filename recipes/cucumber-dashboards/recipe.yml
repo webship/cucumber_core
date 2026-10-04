@@ -4,6 +4,8 @@ type: Testing
 install:
   # The module that ships the dashboards. Applied after the cucumber-views
   # recipe, so the views whose blocks the dashboards place already exist.
+  - display_builder
+  - webdashboard
   - cucumber_core
 config:
   # Only create what a site does not have yet. Re-applying this recipe on a
@@ -13,11 +15,14 @@ config:
     # A recipe installs modules with the configuration installer in syncing
     # mode, which creates simple configuration but no configuration entities
     # (see \Drupal\Core\Recipe\RecipeRunner::installModules()). Import the
-    # dashboards here, so the permissions below have something to grant.
+    # Display Builder profile and the dashboards here, so the permissions
+    # below have something to grant.
+    display_builder:
+      - display_builder.profile.default
+      - filter.format.display_builder_html
     cucumber_core:
-      - core.entity_view_mode.dashboard.token
-      - dashboards.dashboard.default_dashboard
-      - dashboards.dashboard.admin_dashboard
+      - webdashboard.webdashboard.default_dashboard
+      - webdashboard.webdashboard.admin_dashboard
   actions:
     user.role.admin:
       # The Cucumber distribution ships an "admin" role. On a plain Drupal
@@ -27,5 +32,5 @@ config:
         label: Admin
         is_admin: false
       grantPermissions:
-        - 'can view default_dashboard dashboard'
-        - 'can view admin_dashboard dashboard'
+        - 'can view default_dashboard webdashboard'
+        - 'can view admin_dashboard webdashboard'
