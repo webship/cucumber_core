@@ -7,13 +7,15 @@ include:
       - "/includes/include.drupalci.workflows.yml"
 
 variables:
+  # No yarn.lock is committed; Yarn 4 defaults to immutable installs on CI and would refuse to write one.
+  YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
   # Also test with the next major Drupal version and the newest PHP.
   OPT_IN_TEST_NEXT_MAJOR: 1
   OPT_IN_TEST_MAX_PHP: 1
 
 cspell:
   stage: validate
-  image: node:20
+  image: node:24
   before_script:
     - npm install -g cspell
   script:
@@ -33,7 +35,7 @@ cspell:
 # The paired .eslintignore excludes vendor/, .yarn/, web/ and node_modules/ so
 # `eslint .` only lints real module source.
 .lint-yarn:
-  image: node:20
+  image: node:24
   dependencies: []
   variables:
     YARN_ENABLE_GLOBAL_CACHE: "false"
@@ -140,6 +142,7 @@ stylelint:
 webship-js-test:
   extends: .drupal-node-base
   script:
+    - ./node_modules/.bin/cucumber-js --config cucumber.js --dry-run
     - ./node_modules/.bin/cucumber-js --config cucumber.js --tags "not @wip"
   artifacts:
     when: always
@@ -157,7 +160,7 @@ webship-js-test:
 # by UIkit Admin, the log in page included, fail on 11.4.6.
 composer:
   variables:
-    DRUPAL_CORE: "11.4.8"
+    DRUPAL_CORE: "11.4.x-dev"
 
 # Drupal 12: let Composer install the contributed modules that do not declare
 # ^12 yet.
