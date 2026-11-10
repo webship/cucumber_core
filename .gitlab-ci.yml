@@ -7,11 +7,17 @@ include:
       - "/includes/include.drupalci.workflows.yml"
 
 variables:
-  # No yarn.lock is committed; Yarn 4 defaults to immutable installs on CI and would refuse to write one.
+  # Yarn 4 makes installs immutable on CI; let a job update yarn.lock instead of failing when it is behind package.json.
   YARN_ENABLE_IMMUTABLE_INSTALLS: "false"
   # Also test with the next major Drupal version and the newest PHP.
   OPT_IN_TEST_NEXT_MAJOR: 1
   OPT_IN_TEST_MAX_PHP: 1
+
+.composer-base:
+  variables:
+    # Drupal core's own Yarn 4.9.1 reads the project .yarnrc.yml too and rejects its newer npmMinimalAgeGate setting.
+    YARN_RC_FILENAME: .yarnrc.core.yml
+    YARN_NODE_LINKER: node-modules
 
 cspell:
   stage: validate
